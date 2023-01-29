@@ -2,6 +2,7 @@
 
 /* ||  Imports */
 require('dotenv').config()
+const connectDB = require('./config/connectDB')
 const indexRouter = require('./routes/index')
 
 
