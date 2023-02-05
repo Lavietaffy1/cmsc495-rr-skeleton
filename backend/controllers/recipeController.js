@@ -8,6 +8,16 @@ const Recipe = require('../models/recipeModel')
 */
 const getAllRecipes = async (req, res) => {
 
+    const query = Recipe.find({});
+    query.read("primary")
+    query.then((result) => {
+        console.log(result)
+        res.json(result)
+    }).catch((err) => {
+        console.log(err.message)
+        res.send(err)
+    })
+
 }
 
 /*
@@ -16,6 +26,29 @@ const getAllRecipes = async (req, res) => {
 */
 const getSingleRecipe = async (req, res) => {
 
+    // when retrieving in front end, we can use fetch(URL + id to get)
+    const { id } = req.params
+
+    // if there is no id supplied or undefined
+    if (!id) {
+        return res.status(400).json({ message: 'ID is missing'})
+    }
+
+    // if the id supplied cannot be converted to ObjectId
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({ message: 'ID is invalid'})
+    }
+
+    // if something is retrieved, should be populated: this is alternative to thenables, with a catch if await fails
+    const retrievedRecipe = await Recipe.findById({ _id: id }).catch((err => err.message))
+
+    // if the recipe does not exist 
+    if (!retrievedRecipe) {
+        return res.status(400).json({ message: 'Recipe does not exist'})
+    }
+
+    //can the document be jsonified?
+    res.status(200).json({ response: retrievedRecipe })
 }
 
 /*
@@ -32,6 +65,28 @@ const createRecipe = async (req, res) => {
 */
 const updateRecipe = async (req, res) => {
 
+    // when updating in front end, we can use fetch(URL + id to update)
+    const { id } = req.params
+
+    // if there is no id supplied or undefined
+    if (!id) {
+        return res.status(400).json({ message: 'ID is missing'})
+    }
+
+    // if the id supplied cannot be converted to ObjectId
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({ message: 'ID is invalid'})
+    }
+
+    // if something is updated, should be populated: this is alternative to thenables, with a catch if await fails
+    const deletedRecipe = await Recipe.findByIdAndUpdate({ _id: id }).catch((err => err.message))
+
+    // if the recipe does not exist 
+    if (!deleteRecipe) {
+        return res.status(400).json({ message: 'Recipe does not exist'})
+    }
+
+    res.status(200).json({ message: `Recipe with the id of ${deletedRecipe._id}, and the title ${deletedRecipe.name} has been updated!` })
 
 }
 
