@@ -1,4 +1,3 @@
-/* ||  TODO Mongoose model/Schema for Recipe --MONGO TEAM */
 const mongoose = require('mongoose')
 
 const { Schema } = mongoose;
@@ -12,5 +11,5 @@ const recipeSchema = new Schema({
   Servings: Number
 })
 
-module.exports = recipeSchema
-
+// the Database will store the documents in a collection called recipes (lowercase and plural)
+module.exports = mongoose.model('Recipe', recipeSchema)

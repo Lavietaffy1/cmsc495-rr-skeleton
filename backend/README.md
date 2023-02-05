@@ -3,6 +3,7 @@
 - (Production)
 Express.js (Node.js web framework), 
 Mongoose (ODM for MongoDB on Node.js)
+CORS (Cors Middleware for Express.js)
 
 - (Dev)
 nodemon (Automated server restart)

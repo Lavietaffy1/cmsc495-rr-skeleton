@@ -1,10 +1,73 @@
 /* ||  TODO recipe api route controllers/handlers */
 const mongoose = require('mongoose')
+const Recipe = require('../models/recipeModel')
+
+/*
+   * Get all recipes
+   * @route GET /api/recipes
+*/
+const getAllRecipes = async (req, res) => {
+
+}
+
+/*
+   * Get Single recipe
+   * @route GET /api/recipes/id
+*/
+const getSingleRecipe = async (req, res) => {
+
+}
+
+/*
+   * Create single recipe
+   * @route POST /api/recipes
+*/
+const createRecipe = async (req, res) => {
+
+}
+
+/*
+   * Update already existing recipe
+   * @route PATCH /api/recipes/id
+*/
+const updateRecipe = async (req, res) => {
 
 
+}
 
+/*
+   * Delete single recipe
+   * @route DELETE /api/recipes/id
+*/
+const deleteRecipe = async (req, res) => {
+    // when deleting in front end, we can use fetch(URL + id to delete)
+    const { id } = req.params
 
+    // if there is no id supplied or undefined
+    if (!id) {
+        return res.status(400).json({ message: 'ID is missing'})
+    }
+
+    // if the id supplied cannot be converted to ObjectId
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({ message: 'ID is invalid'})
+    }
+
+    // if something is deleted, should be populated: this is alternative to thenables, with a catch if await fails
+    const deletedRecipe = await Recipe.findByIdAndDelete({ _id: id }).catch((err => err.message))
+
+    // if the recipe does not exist 
+    if (!deleteRecipe) {
+        return res.status(400).json({ message: 'Recipe does not exist'})
+    }
+
+    res.status(200).json({ message: `Recipe with the id of ${deletedRecipe._id}, and the title ${deletedRecipe.name} has been deleted!` })
+}
 
 module.exports = {
-
+    getAllRecipes,
+    getSingleRecipe,
+    createRecipe,
+    updateRecipe,
+    deleteRecipe,
 }
