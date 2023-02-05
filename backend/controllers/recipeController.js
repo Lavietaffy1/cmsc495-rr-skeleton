@@ -12,10 +12,10 @@ const getAllRecipes = async (req, res) => {
     query.read("primary")
     query.then((result) => {
         console.log(result)
-        res.json(result)
+        res.status(200).json(result)
     }).catch((err) => {
         console.log(err.message)
-        res.send(err)
+        res.status(400).send(err)
     })
 
 }
