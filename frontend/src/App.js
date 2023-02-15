@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // Components 
-import Home from './views/Home';
+import Home from '../src/views/Home';
 
 const App = () => {
   return (
